@@ -22,6 +22,7 @@ import AnalyticsDashboard from "@/components/AnalyticsDashboard";
 import AIInsights from "@/components/AIInsights";
 import NotificationCenter from "@/components/NotificationCenter";
 import Settings from "@/components/Settings";
+import CampaignBuilder from "@/components/CampaignBuilder";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -111,6 +112,13 @@ const Dashboard = () => {
             isActive={activeSection === "messaging"}
             collapsed={isSidebarCollapsed}
             onClick={() => handleNavigation("messaging")}
+          />
+          <NavItem
+            icon="megaphone"
+            label="Campaigns"
+            isActive={activeSection === "campaigns"}
+            collapsed={isSidebarCollapsed}
+            onClick={() => handleNavigation("campaigns")}
           />
           <NavItem
             icon="bar-chart"
@@ -277,6 +285,8 @@ const Dashboard = () => {
 
               {activeSection === "messaging" && <AIMessagingCenter />}
 
+              {activeSection === "campaigns" && <CampaignBuilder />}
+
               {activeSection === "analytics" && <AnalyticsDashboard />}
 
               {activeSection === "ai-insights" && <AIInsights />}
@@ -398,6 +408,22 @@ const NavItem = ({
             strokeLinejoin="round"
           >
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+        );
+      case "megaphone":
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m3 11 18-5v12L3 14v-3z" />
+            <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
           </svg>
         );
       case "bar-chart":
