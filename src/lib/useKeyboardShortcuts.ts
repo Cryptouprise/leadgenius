@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type KeyboardShortcut = {
   key: string;
@@ -10,42 +10,58 @@ type KeyboardShortcut = {
   description: string;
 };
 
-export const shortcuts: KeyboardShortcut[] = [
-  {
-    key: "k",
-    ctrlKey: true,
-    description: "Open command palette",
-    callback: () => {
-      console.log("Command palette - Coming soon!");
+export const useKeyboardShortcuts = (
+  onShowShortcuts?: () => void,
+  onOpenCommand?: () => void,
+  onCreateLead?: () => void
+) => {
+  const shortcuts: KeyboardShortcut[] = [
+    {
+      key: "k",
+      ctrlKey: true,
+      description: "Open command palette",
+      callback: () => {
+        if (onOpenCommand) {
+          onOpenCommand();
+        } else {
+          console.log("Command palette - Coming soon!");
+        }
+      },
     },
-  },
-  {
-    key: "n",
-    ctrlKey: true,
-    description: "Create new lead",
-    callback: () => {
-      console.log("Create new lead - Coming soon!");
+    {
+      key: "n",
+      ctrlKey: true,
+      description: "Create new lead",
+      callback: () => {
+        if (onCreateLead) {
+          onCreateLead();
+        } else {
+          console.log("Create new lead - Coming soon!");
+        }
+      },
     },
-  },
-  {
-    key: "/",
-    description: "Focus search",
-    callback: () => {
-      const searchInput = document.querySelector('input[type="search"]') as HTMLInputElement;
-      searchInput?.focus();
+    {
+      key: "/",
+      description: "Focus search",
+      callback: () => {
+        const searchInput = document.querySelector(
+          'input[type="search"]'
+        ) as HTMLInputElement;
+        searchInput?.focus();
+      },
     },
-  },
-  {
-    key: "?",
-    shiftKey: true,
-    description: "Show keyboard shortcuts",
-    callback: () => {
-      console.log("Keyboard shortcuts modal - Coming soon!");
+    {
+      key: "?",
+      shiftKey: true,
+      description: "Show keyboard shortcuts",
+      callback: () => {
+        if (onShowShortcuts) {
+          onShowShortcuts();
+        }
+      },
     },
-  },
-];
+  ];
 
-export const useKeyboardShortcuts = () => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // Don't trigger shortcuts when typing in input fields
@@ -55,16 +71,21 @@ export const useKeyboardShortcuts = () => {
         target.tagName === "TEXTAREA" ||
         target.isContentEditable
       ) {
-        // Allow "/" shortcut even in inputs
-        if (event.key !== "/") {
+        // Allow "/" and "?" shortcuts even in some contexts
+        if (event.key !== "/" && event.key !== "?") {
           return;
         }
       }
 
       shortcuts.forEach((shortcut) => {
-        const keyMatches = event.key.toLowerCase() === shortcut.key.toLowerCase();
-        const ctrlMatches = shortcut.ctrlKey ? event.ctrlKey || event.metaKey : true;
-        const shiftMatches = shortcut.shiftKey ? event.shiftKey : !event.shiftKey;
+        const keyMatches =
+          event.key.toLowerCase() === shortcut.key.toLowerCase();
+        const ctrlMatches = shortcut.ctrlKey
+          ? event.ctrlKey || event.metaKey
+          : !event.ctrlKey && !event.metaKey;
+        const shiftMatches = shortcut.shiftKey
+          ? event.shiftKey
+          : event.key === "/" ? true : !event.shiftKey;
         const altMatches = shortcut.altKey ? event.altKey : !event.altKey;
 
         if (keyMatches && ctrlMatches && shiftMatches && altMatches) {
@@ -79,7 +100,7 @@ export const useKeyboardShortcuts = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [onShowShortcuts, onOpenCommand, onCreateLead]);
 };
 
 export default useKeyboardShortcuts;
