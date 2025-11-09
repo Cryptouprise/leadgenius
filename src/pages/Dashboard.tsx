@@ -18,6 +18,8 @@ import LeadManagement from "@/components/LeadManagement";
 import AIMessagingCenter from "@/components/AIMessagingCenter";
 import IntegrationHub from "@/components/IntegrationHub";
 import VoiceAI from "@/components/VoiceAI";
+import AnalyticsDashboard from "@/components/AnalyticsDashboard";
+import AIInsights from "@/components/AIInsights";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -113,6 +115,13 @@ const Dashboard = () => {
             isActive={activeSection === "analytics"}
             collapsed={isSidebarCollapsed}
             onClick={() => handleNavigation("analytics")}
+          />
+          <NavItem
+            icon="sparkles"
+            label="AI Insights"
+            isActive={activeSection === "ai-insights"}
+            collapsed={isSidebarCollapsed}
+            onClick={() => handleNavigation("ai-insights")}
           />
           <NavItem
             icon="plug"
@@ -264,6 +273,10 @@ const Dashboard = () => {
 
               {activeSection === "messaging" && <AIMessagingCenter />}
 
+              {activeSection === "analytics" && <AnalyticsDashboard />}
+
+              {activeSection === "ai-insights" && <AIInsights />}
+
               {activeSection === "integrations" && <IntegrationHub />}
 
               {activeSection === "voice" && <VoiceAI />}
@@ -290,6 +303,25 @@ const NavItem = ({
 }) => {
   const getIcon = (iconName: string) => {
     switch (iconName) {
+      case "sparkles":
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+            <path d="M5 3v4" />
+            <path d="M19 17v4" />
+            <path d="M3 5h4" />
+            <path d="M17 19h4" />
+          </svg>
+        );
       case "voice":
         return (
           <svg
