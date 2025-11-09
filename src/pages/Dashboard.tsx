@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Bell,
-  Settings,
+  Settings as SettingsIcon,
   User,
   Menu,
   Mic,
@@ -18,6 +18,11 @@ import LeadManagement from "@/components/LeadManagement";
 import AIMessagingCenter from "@/components/AIMessagingCenter";
 import IntegrationHub from "@/components/IntegrationHub";
 import VoiceAI from "@/components/VoiceAI";
+import AnalyticsDashboard from "@/components/AnalyticsDashboard";
+import AIInsights from "@/components/AIInsights";
+import NotificationCenter from "@/components/NotificationCenter";
+import Settings from "@/components/Settings";
+import CampaignBuilder from "@/components/CampaignBuilder";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -25,6 +30,7 @@ const Dashboard = () => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState("dashboard");
   const [isLoading, setIsLoading] = useState(true);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
     // Simulate loading data
@@ -108,11 +114,25 @@ const Dashboard = () => {
             onClick={() => handleNavigation("messaging")}
           />
           <NavItem
+            icon="megaphone"
+            label="Campaigns"
+            isActive={activeSection === "campaigns"}
+            collapsed={isSidebarCollapsed}
+            onClick={() => handleNavigation("campaigns")}
+          />
+          <NavItem
             icon="bar-chart"
             label="Analytics"
             isActive={activeSection === "analytics"}
             collapsed={isSidebarCollapsed}
             onClick={() => handleNavigation("analytics")}
+          />
+          <NavItem
+            icon="sparkles"
+            label="AI Insights"
+            isActive={activeSection === "ai-insights"}
+            collapsed={isSidebarCollapsed}
+            onClick={() => handleNavigation("ai-insights")}
           />
           <NavItem
             icon="plug"
@@ -168,6 +188,7 @@ const Dashboard = () => {
               variant="outline"
               size="icon"
               className="relative bg-slate-700 border-slate-600 hover:bg-slate-600"
+              onClick={() => setShowNotifications(true)}
             >
               <Bell className="h-5 w-5 text-white" />
               <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center">
@@ -179,7 +200,7 @@ const Dashboard = () => {
               size="icon"
               className="bg-slate-700 border-slate-600 hover:bg-slate-600"
             >
-              <Settings className="h-5 w-5 text-white" />
+              <SettingsIcon className="h-5 w-5 text-white" />
             </Button>
           </div>
         </header>
@@ -264,13 +285,27 @@ const Dashboard = () => {
 
               {activeSection === "messaging" && <AIMessagingCenter />}
 
+              {activeSection === "campaigns" && <CampaignBuilder />}
+
+              {activeSection === "analytics" && <AnalyticsDashboard />}
+
+              {activeSection === "ai-insights" && <AIInsights />}
+
               {activeSection === "integrations" && <IntegrationHub />}
+
+              {activeSection === "settings" && <Settings />}
 
               {activeSection === "voice" && <VoiceAI />}
             </motion.div>
           )}
         </main>
       </div>
+
+      {/* Notification Center */}
+      <NotificationCenter
+        isOpen={showNotifications}
+        onClose={() => setShowNotifications(false)}
+      />
     </div>
   );
 };
@@ -290,6 +325,25 @@ const NavItem = ({
 }) => {
   const getIcon = (iconName: string) => {
     switch (iconName) {
+      case "sparkles":
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+            <path d="M5 3v4" />
+            <path d="M19 17v4" />
+            <path d="M3 5h4" />
+            <path d="M17 19h4" />
+          </svg>
+        );
       case "voice":
         return (
           <svg
@@ -354,6 +408,22 @@ const NavItem = ({
             strokeLinejoin="round"
           >
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+        );
+      case "megaphone":
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m3 11 18-5v12L3 14v-3z" />
+            <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
           </svg>
         );
       case "bar-chart":

@@ -9,6 +9,7 @@ import {
   MoreHorizontal,
   Plus,
   ChevronDown,
+  Upload,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,6 +31,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
+import LeadImportExport from "./LeadImportExport";
 
 interface Lead {
   id: string;
@@ -47,6 +49,10 @@ const LeadManagement = () => {
   const [selectedLeads, setSelectedLeads] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState("all");
   const [showCreateSegment, setShowCreateSegment] = useState(false);
+  const [showImportExport, setShowImportExport] = useState(false);
+  const [importExportMode, setImportExportMode] = useState<"import" | "export">(
+    "import",
+  );
 
   // Mock data for leads
   const mockLeads: Lead[] = [
@@ -185,6 +191,26 @@ const LeadManagement = () => {
               <Button variant="outline">
                 <Tag className="h-4 w-4 mr-2" />
                 Tags
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setImportExportMode("import");
+                  setShowImportExport(true);
+                }}
+              >
+                <Upload className="h-4 w-4 mr-2" />
+                Import
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setImportExportMode("export");
+                  setShowImportExport(true);
+                }}
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Export
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -422,6 +448,13 @@ const LeadManagement = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Import/Export Dialog */}
+      <LeadImportExport
+        isOpen={showImportExport}
+        onClose={() => setShowImportExport(false)}
+        mode={importExportMode}
+      />
     </motion.div>
   );
 };
