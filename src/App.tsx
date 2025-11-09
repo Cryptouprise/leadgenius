@@ -1,16 +1,30 @@
-import React, { Suspense } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import { useRoutes, Routes, Route } from "react-router-dom";
-import Home from "./components/home";
-import Dashboard from "./pages/Dashboard";
 import { Toaster } from "@/components/ui/toaster";
+import { Loader2 } from "lucide-react";
+import type { RouteObject } from "react-router-dom";
+
+// Lazy load components for better code splitting
+const Home = lazy(() => import("./components/home"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+
+// Loading component
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+    <div className="text-center">
+      <Loader2 className="h-12 w-12 text-primary animate-spin mx-auto" />
+      <p className="mt-4 text-slate-300">Loading...</p>
+    </div>
+  </div>
+);
 
 function App() {
   // Only import routes when VITE_TEMPO is true
   const TempoRoutes = () => {
-    const [routes, setRoutes] = React.useState(null);
-    const [error, setError] = React.useState(null);
+    const [routes, setRoutes] = useState<RouteObject[] | null>(null);
+    const [error, setError] = useState<Error | null>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (import.meta.env.VITE_TEMPO === "true") {
         // Dynamic import to prevent accessing routes before initialization
         import("tempo-routes")
@@ -19,13 +33,13 @@ function App() {
               setRoutes(module.default);
             } else {
               console.warn(
-                "Tempo routes module loaded but default export is missing",
+                "Tempo routes module loaded but default export is missing"
               );
             }
           })
           .catch((err) => {
             console.error("Failed to load tempo routes:", err);
-            setError(err);
+            setError(err as Error);
           });
       }
     }, []);
@@ -39,7 +53,7 @@ function App() {
   };
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<LoadingFallback />}>
       <div>
         <Routes>
           <Route path="/" element={<Home />} />

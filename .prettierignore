@@ -1,0 +1,9 @@
+node_modules
+dist
+build
+.git
+.github
+*.log
+package-lock.json
+src/tempobook/dynamic
+src/tempobook/storyboards
