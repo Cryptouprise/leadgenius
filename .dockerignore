@@ -1,0 +1,22 @@
+# Docker ignore patterns
+node_modules
+npm-debug.log
+.git
+.gitignore
+.github
+.env
+.env.local
+.env.*.local
+dist
+coverage
+.vscode
+.idea
+*.log
+.DS_Store
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE
+*.md
+src/tempobook/dynamic
+src/tempobook/storyboards

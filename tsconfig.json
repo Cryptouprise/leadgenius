@@ -7,6 +7,7 @@
     "skipLibCheck": true,
     "noEmitOnError": false,
 
+    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -14,12 +15,18 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    "strict": false,
+    /* Linting - Enable strict mode for production but allow some flexibility */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    
     "paths": {
       "@/*": ["./src/*"]
     }
   },
   "include": ["src"],
-  "exclude": ["src/tempobook"],
+  "exclude": ["src/tempobook", "node_modules", "dist"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
