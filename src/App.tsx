@@ -1,8 +1,21 @@
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import { useRoutes, Routes, Route } from "react-router-dom";
 import Home from "./components/home";
-import Dashboard from "./pages/Dashboard";
 import { Toaster } from "@/components/ui/toaster";
+import { Loader2 } from "lucide-react";
+
+// Lazy load the Dashboard component for better performance
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+
+// Loading component
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center h-screen w-full bg-gradient-to-br from-slate-900 to-slate-800">
+    <div className="flex flex-col items-center gap-4">
+      <Loader2 className="h-12 w-12 text-blue-500 animate-spin" />
+      <p className="text-white text-lg">Loading...</p>
+    </div>
+  </div>
+);
 
 function App() {
   // Only import routes when VITE_TEMPO is true
@@ -39,7 +52,7 @@ function App() {
   };
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<LoadingFallback />}>
       <div>
         <Routes>
           <Route path="/" element={<Home />} />

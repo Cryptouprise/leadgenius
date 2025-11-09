@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import LeadOverview from "@/components/LeadOverview";
 import LeadManagement from "@/components/LeadManagement";
 import AIMessagingCenter from "@/components/AIMessagingCenter";
@@ -174,6 +175,7 @@ const Dashboard = () => {
                 3
               </span>
             </Button>
+            <ThemeToggle />
             <Button
               variant="outline"
               size="icon"

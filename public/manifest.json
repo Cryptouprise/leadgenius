@@ -1,0 +1,56 @@
+{
+  "name": "Lead Genius - AI-Powered Lead Management",
+  "short_name": "Lead Genius",
+  "description": "AI-powered lead management platform for modern sales teams",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "url": "/dashboard",
+      "description": "Go to dashboard"
+    },
+    {
+      "name": "Leads",
+      "url": "/dashboard?section=leads",
+      "description": "View leads"
+    },
+    {
+      "name": "Messaging",
+      "url": "/dashboard?section=messaging",
+      "description": "Open messaging center"
+    }
+  ]
+}
