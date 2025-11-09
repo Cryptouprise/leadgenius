@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Bell,
-  Settings,
+  Settings as SettingsIcon,
   User,
   Menu,
   Mic,
@@ -20,6 +20,8 @@ import IntegrationHub from "@/components/IntegrationHub";
 import VoiceAI from "@/components/VoiceAI";
 import AnalyticsDashboard from "@/components/AnalyticsDashboard";
 import AIInsights from "@/components/AIInsights";
+import NotificationCenter from "@/components/NotificationCenter";
+import Settings from "@/components/Settings";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -27,6 +29,7 @@ const Dashboard = () => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState("dashboard");
   const [isLoading, setIsLoading] = useState(true);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
     // Simulate loading data
@@ -177,6 +180,7 @@ const Dashboard = () => {
               variant="outline"
               size="icon"
               className="relative bg-slate-700 border-slate-600 hover:bg-slate-600"
+              onClick={() => setShowNotifications(true)}
             >
               <Bell className="h-5 w-5 text-white" />
               <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center">
@@ -188,7 +192,7 @@ const Dashboard = () => {
               size="icon"
               className="bg-slate-700 border-slate-600 hover:bg-slate-600"
             >
-              <Settings className="h-5 w-5 text-white" />
+              <SettingsIcon className="h-5 w-5 text-white" />
             </Button>
           </div>
         </header>
@@ -279,11 +283,19 @@ const Dashboard = () => {
 
               {activeSection === "integrations" && <IntegrationHub />}
 
+              {activeSection === "settings" && <Settings />}
+
               {activeSection === "voice" && <VoiceAI />}
             </motion.div>
           )}
         </main>
       </div>
+
+      {/* Notification Center */}
+      <NotificationCenter
+        isOpen={showNotifications}
+        onClose={() => setShowNotifications(false)}
+      />
     </div>
   );
 };
