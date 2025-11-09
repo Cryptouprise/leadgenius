@@ -13,6 +13,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import KeyboardShortcutsModal from "@/components/KeyboardShortcutsModal";
+import { useKeyboardShortcuts } from "@/lib/useKeyboardShortcuts";
 import LeadOverview from "@/components/LeadOverview";
 import LeadManagement from "@/components/LeadManagement";
 import AIMessagingCenter from "@/components/AIMessagingCenter";
@@ -25,6 +28,14 @@ const Dashboard = () => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState("dashboard");
   const [isLoading, setIsLoading] = useState(true);
+  const [showShortcutsModal, setShowShortcutsModal] = useState(false);
+
+  // Initialize keyboard shortcuts
+  useKeyboardShortcuts(
+    () => setShowShortcutsModal(true),
+    () => console.log("Command palette - Coming soon!"),
+    () => console.log("Create lead - Coming soon!")
+  );
 
   useEffect(() => {
     // Simulate loading data
@@ -174,6 +185,7 @@ const Dashboard = () => {
                 3
               </span>
             </Button>
+            <ThemeToggle />
             <Button
               variant="outline"
               size="icon"
@@ -271,6 +283,12 @@ const Dashboard = () => {
           )}
         </main>
       </div>
+      
+      {/* Keyboard Shortcuts Modal */}
+      <KeyboardShortcutsModal
+        isOpen={showShortcutsModal}
+        onClose={() => setShowShortcutsModal(false)}
+      />
     </div>
   );
 };

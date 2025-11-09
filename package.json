@@ -1,8 +1,27 @@
 {
-  "name": "starter",
+  "name": "leadgenius",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "AI-powered lead management platform for modern sales teams",
+  "author": "Lead Genius Team",
+  "license": "MIT",
   "type": "module",
+  "keywords": [
+    "lead-management",
+    "crm",
+    "sales-automation",
+    "ai",
+    "react",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Cryptouprise/leadgenius.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Cryptouprise/leadgenius/issues"
+  },
+  "homepage": "https://github.com/Cryptouprise/leadgenius#readme",
   "scripts": {
     "dev": "vite",
     "build": "tsc ; vite build",

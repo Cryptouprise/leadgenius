@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -32,3 +38,13 @@ core
 
 .github/
 
+# Test coverage
+coverage
+*.lcov
+
+# Build artifacts
+build
+.cache
+
+# OS files
+Thumbs.db
